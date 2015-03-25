@@ -45,11 +45,10 @@ public:
     String(const String& copyConstructor) { // This is my copy constructor
         
         size = copyConstructor.size;
-        char newString[size];
+        str = new char[size];
         for(int i = 0; i < size; i++) {
-            newString[i] = copyConstructor.str[i];
+            str[i] = (char) copyConstructor.str[i];
         }
-        str = newString;
     }
     ~String() {
         delete[] str;
@@ -201,7 +200,15 @@ void testStringObject() {
         failedMessage();
     }
     
+    cout << "Check if the string was copied corretly: ";
     if(strcmp(s2.getString(), "Hello World") == 0 ) {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+    
+    cout << "Check, if the two Strings are different, by checking their adresses: ";
+    if(s2.getString() != s1.getString()) {
         passedMessage();
     } else {
         failedMessage();
