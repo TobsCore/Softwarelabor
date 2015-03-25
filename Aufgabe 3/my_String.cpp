@@ -42,6 +42,15 @@ public:
             str[i] = c[i];
         }
     }
+    String(const String& copyConstructor) { // This is my copy constructor
+        
+        size = copyConstructor.size;
+        char newString[size];
+        for(int i = 0; i < size; i++) {
+            newString[i] = copyConstructor.str[i];
+        }
+        str = newString;
+    }
     ~String() {
         delete[] str;
     }
