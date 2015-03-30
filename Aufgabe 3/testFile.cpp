@@ -231,13 +231,11 @@ void testConcat() {
     cout << "\n\n##Concatenation of two strings with the '+=' operator: " << endl;
     char c1[] = "Hello";
     char c2[] = "World";
+    char c3[] = "HelloWorld";
     String s1(c1);
     String s2(c2);
     
     s1 += s2; // Length = 10
-    
-    cout << s1.getSize() << endl;
-    cout << s1.getString() << endl;
     
     cout << "Compare string size: ";
     if(s1.getSize() == 10) {
@@ -246,8 +244,22 @@ void testConcat() {
         failedMessage();
     }
     
-    cout << "Compare String contents, letter by letter: " << endl;
-    if(strcmp(s1.getString(), "Hello World")) {
+    cout << "Compare String contents, letter by letter: ";
+    bool correct = true;
+    int i = 0;
+    while(correct) {
+        
+        if(i >= s1.getSize()) {
+            break;
+        }
+        if((char)s1[i] != c3[i]) {
+            correct = false;
+            break;
+        }
+        i++;
+    }
+    
+    if(correct) {
         passedMessage();
     } else {
         failedMessage();
