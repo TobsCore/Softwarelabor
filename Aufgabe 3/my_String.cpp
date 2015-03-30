@@ -86,5 +86,31 @@ String& String::operator=(String& s) {
     return *this;
 }
 
+String& String::operator+=(String& s) {
+    // Copy old String in this temp var
+    char* temp = new char[size];
+    int tempsize = size;
+    for(int i = 0; i < size; i++) {
+        temp[i] = str[i];
+    }
+    
+    // Now free the space, originally occupied by the former string
+    delete[] str;
+    
+    // Now we create the new string, which has the size of the former string added to the
+    // new string. We just need room for one null-terminator.
+    // The null terminator of the former string (the beginning) will be left out.
+    size = tempsize + s.getSize();
+    str = new char[size + 1];
+    
+    // First copy the first string (without the null-terminator) to the beginning
+    for(int i = 0; i < tempsize; i++) {
+        str[i] = temp[i];
+    }
+    // Now add the second string, that we want to concatenae
+    for(int i = 0; i < s.getSize(); i++) {
+        str[tempsize + i] = s[i];
+    }
+    
     return *this;
 }
