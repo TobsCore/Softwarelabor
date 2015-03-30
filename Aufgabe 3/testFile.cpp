@@ -8,6 +8,9 @@ void testCount();
 void testStringObject();
 void passedMessage();
 void failedMessage();
+void testArray();
+void testAssign();
+void testConcat();
 
 ostream& operator<< (ostream &out, String &s) {
     for(int i=0; i<s.size; i++) {
@@ -25,6 +28,9 @@ int main() {
     testCharPointer();
     testCount();
     testStringObject();
+    testArray();
+    testAssign();
+    testConcat();
 }
 
 /*
@@ -146,6 +152,107 @@ void testStringObject() {
     } else {
         failedMessage();
     }
+}
+
+void testArray() {
+    cout << "\n\n##Test access to a string via with an array-like syntax: " << endl;
+    char c1[] = "Test"; //
+    String s1(c1);
+    
+    
+    cout << "Simply check for the first symbol: ";
+    if((char) s1[0] == (char) 'T') {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+    
+    cout << "Check all letters in the testword: ";
+    for(int i = 0; i < s1.getSize(); i++) {
+        if((char) s1[i] == (char) c1[i]) {
+            passedMessage();
+        }else {
+            failedMessage();
+        }
+    }
+    
+    cout << "Test negative input: ";
+    if((char) s1[-1] == (char) '\0') {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+    
+    cout << "Test obvious out of bounds: ";
+    if((char) s1[20] == (char) '\0') {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+    
+    cout << "Test for null-terminator input: ";
+    if((char) s1[5] == (char) '\0') {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+
+}
+
+void testAssign() {
+    cout << "\n\n##Assign a string to another string with the '=' operator: " << endl;
+    char c1[] = "Test"; //
+    String s1(c1);
+    String s2;
+    
+    s2 = s1;
+    
+    cout << s2 << endl;
+    cout << s1 << endl;
+    
+    cout << "Compare string size: ";
+    if(s1.getSize() == s2.getSize()) {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+    
+    cout << "Compare String contents, letter by letter: " << endl;
+    for(int i = 0; i < s1.getSize(); i++) {
+        if(s1[i] == s2[i]) {
+            passedMessage();
+        } else {
+            failedMessage();
+        }
+    }
+}
+
+void testConcat() {
+    cout << "\n\n##Concatenation of two strings with the '+=' operator: " << endl;
+    char c1[] = "Hello";
+    char c2[] = "World";
+    String s1(c1);
+    String s2(c2);
+    
+    s1 += s2; // Length = 10
+    
+    cout << s1.getSize() << endl;
+    cout << s1.getString() << endl;
+    
+    cout << "Compare string size: ";
+    if(s1.getSize() == 10) {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+    
+    cout << "Compare String contents, letter by letter: " << endl;
+    if(strcmp(s1.getString(), "Hello World")) {
+        passedMessage();
+    } else {
+        failedMessage();
+    }
+    
 }
 
 
