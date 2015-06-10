@@ -237,6 +237,8 @@ void testConcat() {
     
     s1 += s2; // Length = 10
     
+    cout << s1.getSize() << endl;
+    
     cout << "Compare string size: ";
     if(s1.getSize() == 10) {
         passedMessage();

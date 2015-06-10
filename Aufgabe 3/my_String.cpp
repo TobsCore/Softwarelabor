@@ -44,9 +44,9 @@ String::String(const char* c) {
 String::String(const String& copyConstructor) { // This is my copy constructor
     
     size = copyConstructor.size;
-    str = new char[size];
-    for(int i = 0; i < size; i++) {
-        str[i] = (char) copyConstructor.str[i];
+    str = new char[size + 1];
+    for(int i = 0; i <= size; i++) {
+        str[i] = copyConstructor.str[i];
     }
 }
 
@@ -74,43 +74,38 @@ char& String::operator[](int index) {
 }
 
 String& String::operator=(String& s) {
+    // Create new copied String
+    char* tempstr = new char[s.getSize()];
+    for(int i = 0; i < s.getSize(); i++) {
+        tempstr[i] = s[i];
+    }
     // free old string's memory
     delete[] str;
-    
-    // Create new copied String
     size = s.getSize();
-    str = new char[size];
-    for(int i = 0; i < size; i++) {
-        str[i] = s[i];
-    }
+
+    str = tempstr;
+    
     return *this;
 }
 
 String& String::operator+=(String& s) {
     // Copy old String in this temp var
-    char* temp = new char[size];
-    int tempsize = size;
+    int tempsize = size + s.getSize();
+    char* temp = new char[tempsize + 1];
+    
     for(int i = 0; i < size; i++) {
         temp[i] = str[i];
     }
     
-    // Now free the space, originally occupied by the former string
-    delete[] str;
-    
-    // Now we create the new string, which has the size of the former string added to the
-    // new string. We just need room for one null-terminator.
-    // The null terminator of the former string (the beginning) will be left out.
-    size = tempsize + s.getSize();
-    str = new char[size + 1];
-    
-    // First copy the first string (without the null-terminator) to the beginning
-    for(int i = 0; i < tempsize; i++) {
-        str[i] = temp[i];
-    }
     // Now add the second string, that we want to concatenae
     for(int i = 0; i < s.getSize(); i++) {
-        str[tempsize + i] = s[i];
+        temp[size + i] = s[i];
     }
+    
+    // Now free the space, originally occupied by the former string
+    delete[] str;
+    str = temp;
+    size = tempsize;
     
     return *this;
 }
